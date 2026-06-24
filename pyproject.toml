@@ -1,0 +1,11 @@
+[project]
+name = "yisen-coding"
+version = "0.1.0"
+description = "Python lessons and notebook-based homework"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ipykernel>=6.29.0",
+    "jupyterlab>=4.4.0",
+    "pytest>=8.4.0",
+]

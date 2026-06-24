@@ -195,21 +195,25 @@ def add(a, b):
 When that cell runs, it can immediately print something like:
 
 ```text
-[PASS] add: 2/2 tests passed
+AC  Test case 1 passed
+AC  Test case 2 passed
+AC  Test case 3 passed
+[PASS] add: 3/3 tests passed
 ```
 
 or:
 
 ```text
+AC  Test case 1 passed
+WA  Test case 2 failed: add(-1, 1) - expected 0, got None
 [FAIL] add: 1/2 tests passed
- - add(-1, 1): expected 0, got None
 ```
 
 So the student can get feedback directly in Jupyter without using the command line every time.
 
 The test cases live in `homework/hw01/tests/cases.py`. Both the notebook decorator and the pytest tests reuse those same cases.
 
-Code-trace answers live in `homework/hw01/tests/traces.py`. Trace checks use the same pass/fail output as normal function checks.
+Code-trace answers live in `homework/hw01/tests/traces.py`. Trace checks use simpler pass/fail output so wrong answers do not reveal the expected answer.
 
 For trace problems, the student writes the predicted output with `print(...)` lines:
 
@@ -221,6 +225,13 @@ def basics():
 ```
 
 The checker captures the printed output and compares it with the expected output. This is easier to read than triple-quoted strings, and GitHub can autograde it because the answer is saved in the notebook source.
+
+Trace feedback does not show the expected answer when the student is wrong:
+
+```text
+WA  Trace failed
+[FAIL] basics: 0/1 tests passed
+```
 
 The pytest file `homework/hw01/tests/test_notebook.py` opens the saved `homework.ipynb`, runs the code cells from top to bottom, and then checks that the expected functions exist and behave correctly.
 

@@ -30,6 +30,7 @@ yisen-coding/
       homework.ipynb
       tests/
         cases.py
+        traces.py
         test_notebook.py
   main.py
   pyproject.toml
@@ -169,6 +170,7 @@ homework/
     homework.ipynb
     tests/
       cases.py
+      traces.py
       test_notebook.py
 ```
 
@@ -177,6 +179,7 @@ The notebook contains:
 - explanation cells
 - examples
 - function cells where the student writes code
+- trace cells where the student predicts code output
 - check cells or decorators that give immediate feedback
 
 Example function cell from `homework/hw01/homework.ipynb`:
@@ -205,6 +208,19 @@ or:
 So the student can get feedback directly in Jupyter without using the command line every time.
 
 The test cases live in `homework/hw01/tests/cases.py`. Both the notebook decorator and the pytest tests reuse those same cases.
+
+Code-trace answers live in `homework/hw01/tests/traces.py`. Trace checks use the same pass/fail output as normal function checks.
+
+For trace problems, the student writes the predicted output with `print(...)` lines:
+
+```python
+@trace("basics", "homework.hw01.tests.traces")
+def basics():
+    print(0)
+    print(1)
+```
+
+The checker captures the printed output and compares it with the expected output. This is easier to read than triple-quoted strings, and GitHub can autograde it because the answer is saved in the notebook source.
 
 The pytest file `homework/hw01/tests/test_notebook.py` opens the saved `homework.ipynb`, runs the code cells from top to bottom, and then checks that the expected functions exist and behave correctly.
 
@@ -348,10 +364,11 @@ For each homework:
 2. Rename it to the next homework, such as `homework/hw02`.
 3. Update the notebook instructions.
 4. Update `tests/cases.py` with the new cases.
-5. Update `tests/test_notebook.py` with the expected function names.
-6. Run `uv run python -B -m pytest -q`.
-7. Push the assignment.
-8. Ask the student to pull the newest version.
+5. Update `tests/traces.py` with any code-trace answers.
+6. Update `tests/test_notebook.py` with the expected function and trace names.
+7. Run `uv run python -B -m pytest -q`.
+8. Push the assignment.
+9. Ask the student to pull the newest version.
 
 The important rule for notebook homework:
 

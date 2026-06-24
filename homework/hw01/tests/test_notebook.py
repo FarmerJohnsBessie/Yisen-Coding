@@ -4,6 +4,7 @@ import pytest
 
 from course_utils.notebook_loader import load_notebook_namespace
 from homework.hw01.tests.cases import assert_add, assert_greet, assert_is_even
+from homework.hw01.tests.traces import assert_basics
 
 
 NOTEBOOK = Path(__file__).parents[1] / "homework.ipynb"
@@ -27,3 +28,8 @@ def test_add(notebook):
 def test_is_even(notebook):
     assert "is_even" in notebook, "Define a function named is_even"
     assert_is_even(notebook["is_even"])
+
+
+def test_basics_trace(notebook):
+    assert "basics" in notebook, "Define a function named basics"
+    assert_basics(notebook["basics"])

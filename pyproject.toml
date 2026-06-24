@@ -9,3 +9,8 @@ dependencies = [
     "jupyterlab>=4.4.0",
     "pytest>=8.4.0",
 ]
+
+[tool.pytest.ini_options]
+addopts = ["-p", "no:cacheprovider"]
+pythonpath = ["."]
+testpaths = ["homework"]

@@ -23,7 +23,7 @@ yisen-coding/
     notebook_check.py
     notebook_loader.py
   lectures/
-    01_functions_and_tests/
+    01-Data-Expression-Variables/
       notes.ipynb
   homework/
     hw01/
@@ -149,7 +149,7 @@ The homework setup cell now searches for the project root automatically, but VS 
 
 A normal class can work like this:
 
-1. Open a lecture notebook, such as `lectures/01_functions_and_tests/notes.ipynb`.
+1. Open a lecture notebook, such as `lectures/01-Data-Expression-Variables/notes.ipynb`.
 2. Teach the concept with examples and small live-coding changes.
 3. Open the homework notebook, such as `homework/hw01/homework.ipynb`.
 4. The student fills in one function at a time.
@@ -162,7 +162,7 @@ A normal class can work like this:
 
 ## Homework Structure
 
-The sample homework is here:
+The first homework is here:
 
 ```text
 homework/
@@ -178,18 +178,28 @@ The notebook contains:
 
 - explanation cells
 - examples
-- function cells where the student writes code
 - trace cells where the student predicts code output
+- function cells where the student writes code
 - check cells or decorators that give immediate feedback
+
+`homework/hw01/homework.ipynb` currently has fifteen beginner questions:
+
+- eight code-trace problems at the front of the notebook
+- five normal practice problems on arithmetic, variables, modulo, floor division, and Booleans
+- two challenge problems that combine multiple ideas in one return expression
+
+Each programming function has at least five test cases. The starter answer cells
+use `pass`, so local pytest and GitHub Actions are expected to fail until the
+student fills them in.
 
 Example function cell from `homework/hw01/homework.ipynb`:
 
 ```python
 from course_utils.notebook_check import check
 
-@check("add", "homework.hw01.tests.cases")
-def add(a, b):
-    return a + b
+@check("double", "homework.hw01.tests.cases")
+def double(number):
+    return number * 2
 ```
 
 When that cell runs, it can immediately print something like:
@@ -198,15 +208,17 @@ When that cell runs, it can immediately print something like:
 AC  Test case 1 passed
 AC  Test case 2 passed
 AC  Test case 3 passed
-[PASS] add: 3/3 tests passed
+AC  Test case 4 passed
+AC  Test case 5 passed
+[PASS] double: 5/5 tests passed
 ```
 
 or:
 
 ```text
 AC  Test case 1 passed
-WA  Test case 2 failed: add(-1, 1) - expected 0, got None
-[FAIL] add: 1/2 tests passed
+WA  Test case 2 failed: double(0) - expected 0, got None
+[FAIL] double: 1/5 tests passed
 ```
 
 So the student can get feedback directly in Jupyter without using the command line every time.
@@ -215,13 +227,14 @@ The test cases live in `homework/hw01/tests/cases.py`. Both the notebook decorat
 
 Code-trace answers live in `homework/hw01/tests/traces.py`. Trace checks use simpler pass/fail output so wrong answers do not reveal the expected answer.
 
-For trace problems, the student writes the predicted output with `print(...)` lines:
+For trace problems, the student writes the predicted output with `print(...)`
+lines:
 
 ```python
-@trace("basics", "homework.hw01.tests.traces")
-def basics():
+@trace("mod_remainders", "homework.hw01.tests.traces")
+def mod_remainders():
     print(0)
-    print(1)
+    print(3)
 ```
 
 The checker captures the printed output and compares it with the expected output. This is easier to read than triple-quoted strings, and GitHub can autograde it because the answer is saved in the notebook source.
@@ -230,7 +243,7 @@ Trace feedback does not show the expected answer when the student is wrong:
 
 ```text
 WA  Trace failed
-[FAIL] basics: 0/1 tests passed
+[FAIL] mod_remainders: 0/1 tests passed
 ```
 
 The pytest file `homework/hw01/tests/test_notebook.py` opens the saved `homework.ipynb`, runs the code cells from top to bottom, and then checks that the expected functions exist and behave correctly.
@@ -267,8 +280,8 @@ Most tests use `assert`.
 Example:
 
 ```python
-def test_add():
-    assert add(2, 3) == 5
+def test_double():
+    assert double(3) == 6
 ```
 
 If the answer is correct, the test passes. If not, `pytest` shows what failed.

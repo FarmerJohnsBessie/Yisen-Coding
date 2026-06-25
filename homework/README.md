@@ -15,4 +15,8 @@ Start with:
 homework/hw01/homework.ipynb
 ```
 
-For this sample homework, the functions are already solved so the workflow passes. For a real assignment, replace the function bodies with `pass` or a `TODO` starter.
+HW01 has eight code-trace questions followed by seven beginner programming
+questions. The answer cells start with `pass`, so the checks are expected to fail
+until the student fills them in.
+
+Each programming function in HW01 has at least five test cases.

@@ -26,6 +26,12 @@ yisen-coding/
     01-Data-Expression-Variables/
       notes.ipynb
   homework/
+    hw00/
+      homework.ipynb
+      tests/
+        cases.py
+        traces.py
+        test_notebook.py
     hw01/
       homework.ipynb
       tests/
@@ -50,6 +56,9 @@ What each part is for:
 This project intentionally avoids extra `__init__.py` files. Modern Python can import these folders as namespace packages, and fewer marker files makes the course easier to navigate.
 
 The test command uses `python -B` so Python does not create `__pycache__` folders while running homework checks.
+
+Pytest uses importlib mode so every homework folder can reuse the same simple
+`tests/test_notebook.py` filename without import-name conflicts.
 
 ## Install The Project
 
@@ -151,7 +160,7 @@ A normal class can work like this:
 
 1. Open a lecture notebook, such as `lectures/01-Data-Expression-Variables/notes.ipynb`.
 2. Teach the concept with examples and small live-coding changes.
-3. Open the homework notebook, such as `homework/hw01/homework.ipynb`.
+3. Open the homework demo notebook, `homework/hw00/homework.ipynb`, to practice the workflow together.
 4. The student fills in one function at a time.
 5. Every function cell has a decorator like `@check(...)`.
 6. When the student runs that cell, Jupyter immediately prints pass/fail feedback.
@@ -162,10 +171,16 @@ A normal class can work like this:
 
 ## Homework Structure
 
-The first homework is here:
+The in-class homework demo is here:
 
 ```text
 homework/
+  hw00/
+    homework.ipynb
+    tests/
+      cases.py
+      traces.py
+      test_notebook.py
   hw01/
     homework.ipynb
     tests/
@@ -181,6 +196,13 @@ The notebook contains:
 - trace cells where the student predicts code output
 - function cells where the student writes code
 - check cells or decorators that give immediate feedback
+
+`homework/hw00/homework.ipynb` is a tiny in-class demo with four questions:
+
+- two code-trace problems
+- two very simple programming problems
+
+Use HW00 to show how to run cells, read AC/WA feedback, save the notebook, and run the final pytest cell.
 
 `homework/hw01/homework.ipynb` currently has fifteen beginner questions:
 
@@ -292,12 +314,39 @@ The student can also run the final check from inside the homework notebook. That
 
 Local checks happen on the student's computer.
 
-GitHub checks happen after the student saves, commits, and pushes:
+GitHub checks happen after the student saves, commits, and pushes.
+
+For HW01, the exact terminal commands are:
 
 ```bash
-git add .
+# 1. Check that Git sees your saved notebook
+git status
+
+# 2. Run the official local check for this homework
+uv run python -B -m pytest -q homework/hw01
+
+# 3. Add only this homework notebook
+git add homework/hw01/homework.ipynb
+
+# 4. Commit your work
 git commit -m "Finish hw01"
+
+# 5. Push your commit to GitHub
 git push
+
+# 6. Check that your working tree is clean
+git status
+```
+
+For HW00, use the same commands with `hw00`:
+
+```bash
+git status
+uv run python -B -m pytest -q homework/hw00
+git add homework/hw00/homework.ipynb
+git commit -m "Finish hw00"
+git push
+git status
 ```
 
 Then GitHub Actions can automatically:
@@ -370,12 +419,18 @@ For normal homework:
 7. Save the notebook.
 8. Run the final pytest cell in the notebook.
 9. Before submitting, restart the notebook kernel and run all cells from the top.
-10. Push the finished work:
+10. Open a terminal in the project folder and run the exact submission commands
+    from the bottom of the homework notebook.
+
+    For example, HW01 uses:
 
    ```bash
-   git add .
-   git commit -m "Finish homework"
+   git status
+   uv run python -B -m pytest -q homework/hw01
+   git add homework/hw01/homework.ipynb
+   git commit -m "Finish hw01"
    git push
+   git status
    ```
 
 11. Check GitHub for the green check.

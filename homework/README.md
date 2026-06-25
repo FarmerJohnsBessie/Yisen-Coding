@@ -12,11 +12,20 @@ Trace problems should usually ask students to write predicted output as `print(.
 Start with:
 
 ```text
+homework/hw00/homework.ipynb
 homework/hw01/homework.ipynb
 ```
+
+HW00 is the in-class demo homework. It has two code-trace questions and two
+very simple programming questions so the student can practice running cells,
+reading checker output, saving the notebook, and running the final check.
 
 HW01 has eight code-trace questions followed by seven beginner programming
 questions. The answer cells start with `pass`, so the checks are expected to fail
 until the student fills them in.
 
 Each programming function in HW01 has at least five test cases.
+
+Each assignment notebook ends with a "Submit This Homework" section. The student
+should copy those exact commands for the current homework, especially the
+homework-specific path like `homework/hw01/homework.ipynb`.
